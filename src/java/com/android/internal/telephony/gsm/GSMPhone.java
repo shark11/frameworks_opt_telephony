@@ -1515,7 +1515,12 @@ public class GSMPhone extends PhoneBase {
             // Complete pending USSD
 
             if (isUssdRelease) {
-                found.onUssdRelease();
+                // MTK weirdness
+                if(ussdMessage != null) {
+                    found.onUssdFinished(ussdMessage, isUssdRequest);
+                } else {
+                    found.onUssdRelease();
+                }
             } else if (isUssdError) {
                 found.onUssdFinishedError();
             } else {
